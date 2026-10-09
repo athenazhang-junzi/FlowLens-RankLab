@@ -1,0 +1,252 @@
+{
+  "schema_version": "flowlens_ranklab_reproduction_v1",
+  "run_id": "gated-gatec-20261009T060623Z",
+  "status": "PASS",
+  "profile": "gatec",
+  "started_at": "2026-10-09T06:06:23+00:00",
+  "git": {
+    "commit": "f6c1307637b142057b914ef679d809a69b4a9ef1",
+    "dirty": true
+  },
+  "runtime_lock": "config/integration/runtime_lock.json",
+  "runtime_lock_sha256": "2706a0a71405a95a1af097dcfa3d315ba15752b1f198d430bd2b042ae8386c9e",
+  "parameters": {
+    "training_groups": 10000,
+    "validation_requests": 2000,
+    "sampling": "hash",
+    "seed": 20261009,
+    "publish_livelab": false
+  },
+  "inputs": {
+    "config/integration/runtime_lock.json": "2706a0a71405a95a1af097dcfa3d315ba15752b1f198d430bd2b042ae8386c9e",
+    "services/metarank/compose.yml": "0af9dfb234625bfa5d547317a633f7755d6bdc6fd1069c7a286f57d801381b6a",
+    "services/metarank/config.yml": "037c55175719cf5e0305ba337f06b5cab93ee886ce975775b550b4172572e48f",
+    "config/integration/metarank_event_contract.json": "588eced5dfa2cdd244720a8948733e361c29fa671686e65bddb287046abd6638",
+    "scripts/run_ranklab_reproduction.py": "7ec2d97eb412be2d75856058fec3384f0fab66f86ba76793b33270c6b4d77d66",
+    "scripts/metarank_contract.py": "f9e00911fd2ef68bca1820f8e8fb3ac942a029475be05e522659850a8670b399",
+    "scripts/export_metarank_events.py": "78397bb5ca4e858cf37924e8948237af494161597c1723cac20787f5c0c9155b",
+    "scripts/validate_metarank_events.py": "0a1e1403e5f514c843c225ac3c256de9776ab46fa87e64d26db8a383ad11cf6a",
+    "scripts/hydrate_metarank_items.py": "966ce96d20db7e792a7fa7027d1d6020f0bb0d93d24c2650d6bfbf2728de7394",
+    "scripts/call_metarank_rank.py": "bd8e45fbb6b33b05229b857c7f19364e1434fd11728cff0204b6252573d0a09b",
+    "scripts/evaluate_metarank_gatec.py": "f53a2b01bbbcd152df846a13868465d65503b2b64a3f3a1fdc2d73c22a3c38ae",
+    "scripts/build_gatec_livelab_payload.py": "749d59f3ef1d6ce92c686687ed695ba6473a98d96cd8655e728f784b54831321",
+    "data/processed/events/log_standard_4_08_to_4_21_pure_clean.csv": "2e78eb1d144f43969659ba912c902f1e2719064c3d82fab38dca34ce6f3fbe7a",
+    "data/extracted/KuaiRand-Pure/data/video_features_basic_pure.csv": "a6f7ee02684c5777422306cdc416e170302288aa89aca9dfea995edbd625bcc2",
+    "reports/gate3/validation_candidate_scores.csv": "ce417996fd8abe69784644741be23b256cb5fea2d73605f2860066ca438cb70b",
+    "reports/gate3/run_manifest.json": "23dfa38e02e3025165fd12cd6a0a2dae82de477881e2ab506b60ef48f36c44df",
+    "config/gate4_strategies.json": "2dc9f48db328e74da694294ba6999c882bc0316171a37266ece2f072017e612c",
+    "reports/gate3/standard_test_candidate_scores.csv": "db7ac0d787d0a5e170e8384e3a2b78237e4831962c04e977c6b93733324b3b26",
+    "reports/gate3/random_sensitivity_candidate_scores.csv": "353ecc1911e8b92d97cbed751abaee89450d59d2d8f3607f5a3b249d3ff73aa1"
+  },
+  "output_directory": "runs/integration/gated-gatec-20261009T060623Z",
+  "steps": [
+    {
+      "name": "export_training_events",
+      "command": [
+        "python",
+        "scripts/export_metarank_events.py",
+        "--output",
+        "runs/integration/gated-gatec-20261009T060623Z/training/events.jsonl",
+        "--manifest",
+        "runs/integration/gated-gatec-20261009T060623Z/training/manifest.json",
+        "--max-groups",
+        "10000",
+        "--group-sampling",
+        "hash",
+        "--sample-seed",
+        "20261009"
+      ],
+      "started_at": "2026-10-09T06:06:23+00:00",
+      "finished_at": "2026-10-09T06:06:34+00:00",
+      "exit_code": 0,
+      "status": "PASS"
+    },
+    {
+      "name": "validate_event_contract",
+      "command": [
+        "python",
+        "scripts/validate_metarank_events.py",
+        "--events",
+        "runs/integration/gated-gatec-20261009T060623Z/training/events.jsonl",
+        "--report",
+        "runs/integration/gated-gatec-20261009T060623Z/training/validation.json"
+      ],
+      "started_at": "2026-10-09T06:06:34+00:00",
+      "finished_at": "2026-10-09T06:06:35+00:00",
+      "exit_code": 0,
+      "status": "PASS"
+    },
+    {
+      "name": "validate_compose",
+      "command": [
+        "docker",
+        "compose",
+        "-f",
+        "services/metarank/compose.yml",
+        "config",
+        "--quiet"
+      ],
+      "started_at": "2026-10-09T06:06:35+00:00",
+      "finished_at": "2026-10-09T06:06:35+00:00",
+      "exit_code": 0,
+      "status": "PASS"
+    },
+    {
+      "name": "start_and_train_metarank",
+      "command": [
+        "docker",
+        "compose",
+        "-f",
+        "services/metarank/compose.yml",
+        "up",
+        "-d",
+        "--force-recreate"
+      ],
+      "started_at": "2026-10-09T06:06:35+00:00",
+      "finished_at": "2026-10-09T06:06:35+00:00",
+      "exit_code": 0,
+      "status": "PASS"
+    },
+    {
+      "name": "wait_for_metarank",
+      "started_at": "2026-10-09T06:06:35+00:00",
+      "finished_at": "2026-10-09T06:06:39+00:00",
+      "status": "PASS"
+    },
+    {
+      "name": "hydrate_candidate_metadata",
+      "command": [
+        "python",
+        "scripts/hydrate_metarank_items.py",
+        "--candidates",
+        "reports/gate3/validation_candidate_scores.csv",
+        "--candidates",
+        "reports/gate3/standard_test_candidate_scores.csv",
+        "--candidates",
+        "reports/gate3/random_sensitivity_candidate_scores.csv",
+        "--timestamp-ms",
+        "1650207850711",
+        "--endpoint",
+        "http://127.0.0.1:8080",
+        "--events-output",
+        "runs/integration/gated-gatec-20261009T060623Z/hydration/item_events.jsonl",
+        "--manifest",
+        "runs/integration/gated-gatec-20261009T060623Z/hydration/manifest.json"
+      ],
+      "started_at": "2026-10-09T06:06:40+00:00",
+      "finished_at": "2026-10-09T06:06:42+00:00",
+      "exit_code": 0,
+      "status": "PASS"
+    },
+    {
+      "name": "rank_validation_cohort",
+      "command": [
+        "python",
+        "scripts/call_metarank_rank.py",
+        "--candidates",
+        "reports/gate3/validation_candidate_scores.csv",
+        "--split",
+        "validation",
+        "--timestamp-ms",
+        "1650207850712",
+        "--max-requests",
+        "2000",
+        "--request-sampling",
+        "hash",
+        "--sample-seed",
+        "20261009",
+        "--endpoint",
+        "http://127.0.0.1:8080",
+        "--requests-output",
+        "runs/integration/gated-gatec-20261009T060623Z/ranking/requests.jsonl",
+        "--results-output",
+        "runs/integration/gated-gatec-20261009T060623Z/ranking/results.csv",
+        "--manifest",
+        "runs/integration/gated-gatec-20261009T060623Z/ranking/manifest.json"
+      ],
+      "started_at": "2026-10-09T06:06:42+00:00",
+      "finished_at": "2026-10-09T06:06:46+00:00",
+      "exit_code": 0,
+      "status": "PASS"
+    },
+    {
+      "name": "evaluate_shared_cohort",
+      "command": [
+        "python",
+        "scripts/evaluate_metarank_gatec.py",
+        "--candidates",
+        "reports/gate3/validation_candidate_scores.csv",
+        "--rankings",
+        "runs/integration/gated-gatec-20261009T060623Z/ranking/results.csv",
+        "--rank-manifest",
+        "runs/integration/gated-gatec-20261009T060623Z/ranking/manifest.json",
+        "--hydration-manifest",
+        "runs/integration/gated-gatec-20261009T060623Z/hydration/manifest.json",
+        "--split",
+        "validation",
+        "--output-dir",
+        "runs/integration/gated-gatec-20261009T060623Z/evaluation",
+        "--random-seed",
+        "20261009"
+      ],
+      "started_at": "2026-10-09T06:06:46+00:00",
+      "finished_at": "2026-10-09T06:06:46+00:00",
+      "exit_code": 0,
+      "status": "PASS"
+    },
+    {
+      "name": "build_livelab_payload",
+      "command": [
+        "python",
+        "scripts/build_gatec_livelab_payload.py",
+        "--evaluation-dir",
+        "runs/integration/gated-gatec-20261009T060623Z/evaluation",
+        "--training-manifest",
+        "runs/integration/gated-gatec-20261009T060623Z/training/manifest.json",
+        "--hydration-manifest",
+        "runs/integration/gated-gatec-20261009T060623Z/hydration/manifest.json",
+        "--output-json",
+        "runs/integration/gated-gatec-20261009T060623Z/livelab/ranklab_offline_run.json",
+        "--output-js",
+        "runs/integration/gated-gatec-20261009T060623Z/livelab/ranklab_offline_run.js"
+      ],
+      "started_at": "2026-10-09T06:06:46+00:00",
+      "finished_at": "2026-10-09T06:06:46+00:00",
+      "exit_code": 0,
+      "status": "PASS"
+    }
+  ],
+  "claim_boundary": "All model comparisons are E3 logged-exposure offline replay, not online causal or business lift.",
+  "metarank": {
+    "locked_image": "metarank/metarank:0.8.0@sha256:495f8f72cef67bbbccd1bc29b9f3d1ddfa322eb2f79eb151a48d9a6b4ed74e63",
+    "platform": "linux/arm64",
+    "container_id": "0cca0de108c9",
+    "endpoint": "http://127.0.0.1:8080"
+  },
+  "evaluation": {
+    "manifest": "runs/integration/gated-gatec-20261009T060623Z/evaluation/manifest.json",
+    "run_id": "gatec-eval-3b2f6c18ff716fa6",
+    "status": "VALID",
+    "decision": "ITERATE_AND_RETEST",
+    "request_count": 2000,
+    "candidate_count": 10889
+  },
+  "canonical_comparison": {
+    "metrics": {
+      "canonical_sha256": "6ac8b734328455313880d9ad8cc9486e6f0ac6767cd0f6e1d17bac29d6d5b841",
+      "reproduced_sha256": "6ac8b734328455313880d9ad8cc9486e6f0ac6767cd0f6e1d17bac29d6d5b841",
+      "match": true
+    },
+    "paired_deltas": {
+      "canonical_sha256": "665b83e9dcfaa27bda7eaf191668393b6d6fc4ed1e769833aab1b676fd51d845",
+      "reproduced_sha256": "665b83e9dcfaa27bda7eaf191668393b6d6fc4ed1e769833aab1b676fd51d845",
+      "match": true
+    },
+    "decision": {
+      "canonical": "ITERATE_AND_RETEST",
+      "reproduced": "ITERATE_AND_RETEST",
+      "match": true
+    }
+  },
+  "finished_at": "2026-10-09T06:06:46+00:00"
+}

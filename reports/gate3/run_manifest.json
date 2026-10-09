@@ -1,0 +1,35 @@
+{
+  "run_id": "gate3-3b42b7057a17",
+  "status": "VALID",
+  "evidence_level": "E3",
+  "config_id": "gate3_baseline_v1",
+  "config_sha256": "37e6fe7aecc89584a1a1eac9a1ae437657bfde7d2b6be895b8cf6df561899f46",
+  "script_sha256": "4ff904a4a82bdacda09444be138b956d57f69c0bb2ee971ad2da4dac6f35135f",
+  "archive_md5": "0820331067a3784d9691136f772b35a7",
+  "random_seed": 20261005,
+  "dependencies": {
+    "numpy": "2.3.5",
+    "pandas": "2.2.3",
+    "scipy": "1.18.1",
+    "scikit-learn": "1.9.1"
+  },
+  "source_files": [
+    "data/processed/events/log_standard_4_08_to_4_21_pure_clean.csv",
+    "data/processed/events/log_standard_4_22_to_5_08_pure_clean.csv",
+    "data/processed/events/log_random_4_22_to_5_08_pure_clean.csv"
+  ],
+  "artifacts": [
+    "baseline_metrics.csv",
+    "user_ranking_metrics.csv",
+    "validation_candidate_scores.csv",
+    "tag_supply_demand.csv",
+    "daily_standard_test.csv",
+    "standard_test_candidate_scores.csv",
+    "random_sensitivity_candidate_scores.csv",
+    "split_manifest.json",
+    "guardrails.json",
+    "leakage_report.json",
+    "Gate3-诊断与基线报告.md"
+  ],
+  "claim_boundary": "Offline results rank logged exposures only and do not establish online causal lift or Tencent business impact."
+}

@@ -1,0 +1,33 @@
+{
+  "status": "VALID",
+  "evidence_level": "E2",
+  "candidate_files": [
+    "reports/gate3/validation_candidate_scores.csv",
+    "reports/gate3/standard_test_candidate_scores.csv",
+    "reports/gate3/random_sensitivity_candidate_scores.csv"
+  ],
+  "candidate_file_sha256": {
+    "reports/gate3/validation_candidate_scores.csv": "ce417996fd8abe69784644741be23b256cb5fea2d73605f2860066ca438cb70b",
+    "reports/gate3/standard_test_candidate_scores.csv": "db7ac0d787d0a5e170e8384e3a2b78237e4831962c04e977c6b93733324b3b26",
+    "reports/gate3/random_sensitivity_candidate_scores.csv": "353ecc1911e8b92d97cbed751abaee89450d59d2d8f3607f5a3b249d3ff73aa1"
+  },
+  "metadata_file": "data/extracted/KuaiRand-Pure/data/video_features_basic_pure.csv",
+  "metadata_sha256": "a6f7ee02684c5777422306cdc416e170302288aa89aca9dfea995edbd625bcc2",
+  "events_file": "runs/integration/gatec-hydration/item_events.jsonl",
+  "events_sha256": "b96de6324fbd67b756b174d486d5fedc15c3122601e9ad2441105fda2b9a3297",
+  "timestamp_ms": 1650207850711,
+  "summary": {
+    "candidate_unique_items": 7583,
+    "metadata_rows_emitted": 7583,
+    "missing_metadata_ids": 0,
+    "duplicate_metadata_rows": 0,
+    "missing_duration": 239,
+    "missing_author": 0
+  },
+  "api_batches": 16,
+  "api_accepted": 7583,
+  "api_updated": 22749,
+  "candidate_metadata_coverage": "PASS",
+  "duration_missing_policy": "duration_ms=0 sentinel plus duration_missing=1",
+  "claim_boundary": "This artifact proves static metadata coverage for the selected offline cohorts. It does not use evaluation outcomes as model features or establish ranking lift."
+}

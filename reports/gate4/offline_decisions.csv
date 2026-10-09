@@ -1,0 +1,6 @@
+strategy,decision,passed_rules,total_rules,reason
+S0,BASELINE,0,0,Frozen comparison baseline.
+S1,ITERATE_AND_RETEST,4,6,"Failed: ndcg_ci, ecr_ci"
+S2,ITERATE_AND_RETEST,4,6,"Failed: ndcg_ci, ecr_ci"
+S3,ITERATE_AND_RETEST,4,6,"Failed: ndcg_ci, ecr_ci"
+S4,ITERATE_AND_RETEST,4,6,"Failed: ndcg_ci, ecr_ci"

@@ -1,0 +1,56 @@
+{
+  "status": "PASS_WITH_LIMITATIONS",
+  "integration_run_id": "gateb-runtime-4c0fd7eb-1f34afad",
+  "evidence_level": "E3",
+  "runtime": {
+    "image": "metarank/metarank:0.8.0",
+    "image_digest": "sha256:495f8f72cef67bbbccd1bc29b9f3d1ddfa322eb2f79eb151a48d9a6b4ed74e63",
+    "platform": "linux/arm64",
+    "config_sha256": "1f34afad79d98b0421c2d92206a2275a0996704c28581339381e48990037623c",
+    "events_sha256": "4c0fd7eb30668f01d6753511a0365f5738d0a4a11174fce921a80592398ad6ff"
+  },
+  "import": {
+    "event_count": 2077,
+    "generated_update_count": 2799,
+    "clickthrough_count": 92,
+    "train_clickthrough_count": 74,
+    "test_clickthrough_count": 18
+  },
+  "training": {
+    "model": "flowlens",
+    "algorithm": "LambdaMART/XGBoost",
+    "status": "PASS",
+    "reported_test_metrics": {
+      "NDCG@5": 1.0,
+      "NDCG@10": 1.0,
+      "MAP@5": 0.21111111111111117
+    },
+    "metric_warning": "These are Metarank's internal metrics on an 18-session smoke-test split. Source NDCG was already 1.0, so they do not establish improvement over FlowLens baselines."
+  },
+  "api": {
+    "endpoint": "/rank/flowlens",
+    "request_count": 50,
+    "input_candidate_count": 253,
+    "result_row_count": 253,
+    "candidate_conservation": "PASS",
+    "reordered_request_count": 33,
+    "response_took_ms": {
+      "min": 0,
+      "median": 1,
+      "max": 13
+    }
+  },
+  "feature_presence": {
+    "position": 253,
+    "recent_clicks": 253,
+    "recent_long_views": 253,
+    "item_duration": 117,
+    "tag_diversity": 133
+  },
+  "limitations": [
+    "The 200-group smoke-test import does not contain metadata for every validation candidate.",
+    "Rank responses prove runtime compatibility and candidate conservation only.",
+    "Gate C must hydrate candidate metadata and recompute FlowLens metrics on the unified evaluation population before any model comparison."
+  ],
+  "claim_boundary": "This run proves a reproducible FlowLens-to-Metarank import, train, serve, and rank path. It does not prove ranking improvement, online causal lift, or business impact."
+}

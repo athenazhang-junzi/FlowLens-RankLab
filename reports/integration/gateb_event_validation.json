@@ -1,0 +1,68 @@
+{
+  "status": "PASS",
+  "contract_id": "flowlens_metarank_event_contract_v0.1",
+  "event_counts": {
+    "interaction": 941,
+    "item": 936,
+    "ranking": 200
+  },
+  "ranking_splits": [
+    "train"
+  ],
+  "checks": [
+    {
+      "check": "event_types_supported",
+      "status": "PASS",
+      "detail": "invalid=[]"
+    },
+    {
+      "check": "event_ids_are_globally_unique",
+      "status": "PASS",
+      "detail": "events=2077, missing=0, duplicates=0"
+    },
+    {
+      "check": "namespaces_match_contract",
+      "status": "PASS",
+      "detail": "errors=[], total=0"
+    },
+    {
+      "check": "ranking_candidates_valid",
+      "status": "PASS",
+      "detail": "rankings=200, errors=[]"
+    },
+    {
+      "check": "item_event_exists_for_every_candidate",
+      "status": "PASS",
+      "detail": "missing=[], total=0"
+    },
+    {
+      "check": "forbidden_outcomes_not_ranking_features",
+      "status": "PASS",
+      "detail": "leaked=[]"
+    },
+    {
+      "check": "interaction_parent_and_item_linkage",
+      "status": "PASS",
+      "detail": "errors=[], total=0"
+    },
+    {
+      "check": "ranking_precedes_its_interactions",
+      "status": "PASS",
+      "detail": "errors=[], total=0"
+    },
+    {
+      "check": "reserved_impression_not_emitted",
+      "status": "PASS",
+      "detail": "events=[], total=0"
+    },
+    {
+      "check": "event_stream_is_timestamp_sorted",
+      "status": "PASS",
+      "detail": "parseable=True, out_of_order=0"
+    }
+  ],
+  "claim_boundary": "A valid contract export proves adapter structure and linkage only. It does not prove successful Metarank runtime import, model training, ranking improvement, online experimentation, or business lift.",
+  "events_file": "runs/integration/gateb-contract/events.jsonl",
+  "events_sha256": "4c0fd7eb30668f01d6753511a0365f5738d0a4a11174fce921a80592398ad6ff",
+  "event_count": 2077
+}

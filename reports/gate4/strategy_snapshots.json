@@ -1,0 +1,80 @@
+{
+  "S0": {
+    "strategy_id": "S0",
+    "name": "MultiTask baseline",
+    "purpose": "Frozen Gate 3 learning-model baseline",
+    "parameters": {},
+    "selected_on": "validation",
+    "frozen_before": [
+      "standard_test",
+      "random_sensitivity"
+    ],
+    "snapshot_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+  },
+  "S1": {
+    "strategy_id": "S1",
+    "name": "Collaborative blend",
+    "purpose": "Blend learned utility with ItemCF affinity",
+    "parameters": {
+      "itemcf_weight": 0.15
+    },
+    "selected_on": "validation",
+    "frozen_before": [
+      "standard_test",
+      "random_sensitivity"
+    ],
+    "snapshot_sha256": "340c86d9157446545475119d2c1f3514dd06dd94264e096d80d85009cf697261"
+  },
+  "S2": {
+    "strategy_id": "S2",
+    "name": "Diversity rerank",
+    "purpose": "Reduce repeated authors and primary tags in Top 10",
+    "parameters": {
+      "itemcf_weight": 0.15,
+      "author_repeat_penalty": 0.06,
+      "tag_repeat_penalty": 0.04
+    },
+    "selected_on": "validation",
+    "frozen_before": [
+      "standard_test",
+      "random_sensitivity"
+    ],
+    "snapshot_sha256": "21eea195e58a427eadf3e2ccec8c865f5b220ba50727ba5d86c26299ca2e6ec4"
+  },
+  "S3": {
+    "strategy_id": "S3",
+    "name": "Long-tail exploration",
+    "purpose": "Reserve ranking headroom for historically less-exposed items",
+    "parameters": {
+      "itemcf_weight": 0.15,
+      "author_repeat_penalty": 0.06,
+      "tag_repeat_penalty": 0.04,
+      "long_tail_boost": 0.06
+    },
+    "selected_on": "validation",
+    "frozen_before": [
+      "standard_test",
+      "random_sensitivity"
+    ],
+    "snapshot_sha256": "a37b24b5f473aeb3ebec77864b3f34c645df50d1c6981c1e09287386c3fb6d44"
+  },
+  "S4": {
+    "strategy_id": "S4",
+    "name": "Negative-feedback and fatigue control",
+    "purpose": "Penalize historical hate risk and recent author fatigue",
+    "parameters": {
+      "itemcf_weight": 0.15,
+      "author_repeat_penalty": 0.06,
+      "tag_repeat_penalty": 0.04,
+      "long_tail_boost": 0.06,
+      "negative_risk_penalty": 0.1,
+      "fatigue_penalty": 0.02
+    },
+    "selected_on": "validation",
+    "frozen_before": [
+      "standard_test",
+      "random_sensitivity"
+    ],
+    "snapshot_sha256": "af95adfcd63e6271a2c8344a8b4819ca5ef6c61041c048e443006f3942c089ef"
+  }
+}

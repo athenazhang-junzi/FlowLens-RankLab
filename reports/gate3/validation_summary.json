@@ -1,0 +1,72 @@
+{
+  "status": "PASS",
+  "review_scope": "Gate 3 compact outputs and user-level metric recomputation",
+  "checks": [
+    {
+      "check": "required_artifacts_exist",
+      "status": "PASS",
+      "detail": "missing=[]"
+    },
+    {
+      "check": "model_split_matrix_complete",
+      "status": "PASS",
+      "detail": "rows=9, pairs=9"
+    },
+    {
+      "check": "user_level_metrics_recompute",
+      "status": "PASS",
+      "detail": "maximum_absolute_difference=3.331e-16"
+    },
+    {
+      "check": "metrics_within_unit_interval",
+      "status": "PASS",
+      "detail": "columns=18"
+    },
+    {
+      "check": "bootstrap_ci_contains_estimate",
+      "status": "PASS",
+      "detail": "all 9 rows checked"
+    },
+    {
+      "check": "strict_time_order",
+      "status": "PASS",
+      "detail": "train < validation < standard_test"
+    },
+    {
+      "check": "leakage_suite_and_negative_control",
+      "status": "PASS",
+      "detail": "status=PASS, injected_rejections=['forbidden_source', 'invalid_availability', 'outcome_leakage']"
+    },
+    {
+      "check": "tag_shares_reconcile",
+      "status": "PASS",
+      "detail": "supply_share_error=4.00e-15, demand_share_error=2.89e-15, exposure_share_error=3.22e-15, consumption_share_error=3.22e-15"
+    },
+    {
+      "check": "daily_test_window_complete",
+      "status": "PASS",
+      "detail": "days=17, rows=289119"
+    },
+    {
+      "check": "sampling_sensitivity_detected",
+      "status": "PASS",
+      "detail": "standard=['MultiTaskHashSGD', 'ItemCF', 'Popularity']; random=['ItemCF', 'Popularity', 'MultiTaskHashSGD']"
+    },
+    {
+      "check": "run_manifest_valid_e3",
+      "status": "PASS",
+      "detail": "run_id=gate3-3b42b7057a17, status=VALID, evidence=E3"
+    },
+    {
+      "check": "code_and_config_hashes_match",
+      "status": "PASS",
+      "detail": "script_match=True, config_match=True"
+    },
+    {
+      "check": "manifest_artifacts_exist",
+      "status": "PASS",
+      "detail": "listed=11, missing=[]"
+    }
+  ],
+  "claim_boundary": "Offline results rank logged exposures only and do not establish online causal lift or Tencent business impact."
+}

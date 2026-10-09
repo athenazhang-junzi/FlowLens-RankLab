@@ -1,0 +1,51 @@
+{
+  "policy": {
+    "raw_files_immutable": true,
+    "exact_duplicates": "drop in analysis view only",
+    "event_key_collisions": "preserve and flag",
+    "long_view": "preserve official raw label; derived rule is a nullable sensitivity field",
+    "daily_partition": "source date",
+    "within_day_order": "time_ms"
+  },
+  "logs": {
+    "standard_early": {
+      "source": "log_standard_4_08_to_4_21_pure.csv",
+      "raw_rows": 1141112,
+      "clean_rows": 1125503,
+      "exact_duplicate_rows_dropped": 15609,
+      "exact_duplicate_rate": 0.013678762470292136,
+      "duration_invalid_rows": 24062,
+      "long_view_rule_unverifiable_rows": 24062,
+      "long_view_rule_mismatch_rows": 2663,
+      "timestamp_date_mismatch_rows": 9095,
+      "event_key_collision_rows_after_exact_dedup": 1942,
+      "output": "data/processed/events/log_standard_4_08_to_4_21_pure_clean.csv"
+    },
+    "standard_late": {
+      "source": "log_standard_4_22_to_5_08_pure.csv",
+      "raw_rows": 295497,
+      "clean_rows": 289119,
+      "exact_duplicate_rows_dropped": 6378,
+      "exact_duplicate_rate": 0.0215839754718322,
+      "duration_invalid_rows": 4798,
+      "long_view_rule_unverifiable_rows": 4798,
+      "long_view_rule_mismatch_rows": 725,
+      "timestamp_date_mismatch_rows": 2654,
+      "event_key_collision_rows_after_exact_dedup": 1030,
+      "output": "data/processed/events/log_standard_4_22_to_5_08_pure_clean.csv"
+    },
+    "random_late": {
+      "source": "log_random_4_22_to_5_08_pure.csv",
+      "raw_rows": 1186059,
+      "clean_rows": 1186049,
+      "exact_duplicate_rows_dropped": 10,
+      "exact_duplicate_rate": 8.431283772561062e-06,
+      "duration_invalid_rows": 36920,
+      "long_view_rule_unverifiable_rows": 36920,
+      "long_view_rule_mismatch_rows": 1208,
+      "timestamp_date_mismatch_rows": 8626,
+      "event_key_collision_rows_after_exact_dedup": 0,
+      "output": "data/processed/events/log_random_4_22_to_5_08_pure_clean.csv"
+    }
+  }
+}

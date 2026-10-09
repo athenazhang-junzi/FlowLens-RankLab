@@ -1,0 +1,16 @@
+services:
+  metarank:
+    image: metarank/metarank:0.8.0@sha256:495f8f72cef67bbbccd1bc29b9f3d1ddfa322eb2f79eb151a48d9a6b4ed74e63
+    platform: linux/arm64
+    command:
+      - standalone
+      - --config
+      - /opt/metarank/config.yml
+      - --data
+      - /data/events.jsonl
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./config.yml:/opt/metarank/config.yml:ro
+      - ${METARANK_EVENTS_FILE:-../../runs/integration/gateb-contract/events.jsonl}:/data/events.jsonl:ro
+    restart: "no"

@@ -1,0 +1,69 @@
+{
+  "contract_id": "kuairand_pure_v1",
+  "source": "https://zenodo.org/records/10439422",
+  "archive": "KuaiRand-Pure.tar.gz",
+  "expected_md5": "0820331067a3784d9691136f772b35a7",
+  "license": "CC-BY-SA-4.0",
+  "event_grain": "one user-video exposure or interaction record per source row",
+  "candidate_event_key": ["user_id", "video_id", "time_ms"],
+  "required_event_columns": [
+    "user_id",
+    "video_id",
+    "date",
+    "hourmin",
+    "time_ms",
+    "is_click",
+    "is_like",
+    "is_follow",
+    "is_comment",
+    "is_forward",
+    "is_hate",
+    "long_view",
+    "play_time_ms",
+    "duration_ms",
+    "profile_stay_time",
+    "comment_stay_time",
+    "is_profile_enter",
+    "is_rand",
+    "tab"
+  ],
+  "binary_columns": [
+    "is_click",
+    "is_like",
+    "is_follow",
+    "is_comment",
+    "is_forward",
+    "is_hate",
+    "long_view",
+    "is_profile_enter",
+    "is_rand"
+  ],
+  "stable_blocking_rules": [
+    "archive_md5_matches",
+    "required_columns_exist",
+    "binary_columns_are_0_or_1",
+    "time_and_duration_columns_are_nonnegative",
+    "is_rand_matches_source_file",
+    "user_and_video_foreign_keys_resolve"
+  ],
+  "mandatory_cleaning_rules": [
+    "drop_only_exact_duplicate_rows_in_analysis_view",
+    "preserve_nonidentical_candidate_key_collisions_with_flag",
+    "preserve_raw_long_view_as_source_label",
+    "mark_duration_ms_zero_as_unverifiable_for_formula_recalculation",
+    "use_source_date_for_daily_partition_and_time_ms_for_within_day_order",
+    "map_minus_124_and_documented_unknown_values_to_explicit_unknown_flags"
+  ],
+  "forbidden_training_sources": [
+    {
+      "source": "video_features_statistic_pure.csv",
+      "reason": "whole-month aggregates without event date can leak validation and test outcomes"
+    }
+  ],
+  "known_source_limitations": [
+    "KuaiRand-Pure contains incomplete sequential logs",
+    "visible_status is constant zero in the released basic video table",
+    "official README enum descriptions do not cover every observed user_active_degree value",
+    "source date and Asia/Shanghai date derived from time_ms are not always equal"
+  ]
+}

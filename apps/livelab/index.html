@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="FlowLens LiveLab：用于演示视频内容分发实验配置、健康检查与离线回放决策的本地原型。"
+    />
+    <title>FlowLens LiveLab · 视频内容分发实验台</title>
+    <link rel="preconnect" href="https://font.emtech.cc" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://font.emtech.cc/css/LXGWNeoXiHei" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <!-- Lucide icon paths, Apache-2.0: https://lucide.dev -->
+    <svg class="icon-sprite" aria-hidden="true">
+      <symbol id="icon-activity" viewBox="0 0 24 24">
+        <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+      </symbol>
+      <symbol id="icon-play" viewBox="0 0 24 24">
+        <path d="m6 3 14 9-14 9z" />
+      </symbol>
+      <symbol id="icon-pause" viewBox="0 0 24 24">
+        <path d="M8 5v14M16 5v14" />
+      </symbol>
+      <symbol id="icon-flask" viewBox="0 0 24 24">
+        <path d="M9 3h6M10 9V3h4v6l5 9a2 2 0 0 1-2 3H7a2 2 0 0 1-2-3z" />
+        <path d="M7.5 15h9" />
+      </symbol>
+      <symbol id="icon-check" viewBox="0 0 24 24">
+        <path d="m5 12 4 4L19 6" />
+      </symbol>
+      <symbol id="icon-alert" viewBox="0 0 24 24">
+        <path d="M12 9v4M12 17h.01" />
+        <path d="M10.3 3.7 2.4 17.4A2 2 0 0 0 4.1 20h15.8a2 2 0 0 0 1.7-2.6L13.7 3.7a2 2 0 0 0-3.4 0Z" />
+      </symbol>
+      <symbol id="icon-x" viewBox="0 0 24 24">
+        <path d="m6 6 12 12M18 6 6 18" />
+      </symbol>
+      <symbol id="icon-arrow" viewBox="0 0 24 24">
+        <path d="M5 12h14M13 6l6 6-6 6" />
+      </symbol>
+      <symbol id="icon-chart" viewBox="0 0 24 24">
+        <path d="M4 19V9M10 19V5M16 19v-7M22 19H2" />
+      </symbol>
+      <symbol id="icon-shield" viewBox="0 0 24 24">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z" />
+      </symbol>
+      <symbol id="icon-file" viewBox="0 0 24 24">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+        <path d="M14 2v6h6M8 13h8M8 17h6" />
+      </symbol>
+      <symbol id="icon-sliders" viewBox="0 0 24 24">
+        <path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3" />
+        <path d="M1 14h6M9 8h6M17 16h6" />
+      </symbol>
+      <symbol id="icon-chevron" viewBox="0 0 24 24">
+        <path d="m9 18 6-6-6-6" />
+      </symbol>
+      <symbol id="icon-save" viewBox="0 0 24 24">
+        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z" />
+        <path d="M17 21v-8H7v8M7 3v5h8" />
+      </symbol>
+      <symbol id="icon-reset" viewBox="0 0 24 24">
+        <path d="M3 12a9 9 0 1 0 3-6.7L3 8" />
+        <path d="M3 3v5h5" />
+      </symbol>
+    </svg>
+
+    <header class="app-header">
+      <a class="brand" href="#top" aria-label="FlowLens LiveLab 首页">
+        <span class="brand-mark" aria-hidden="true">FL</span>
+        <span>
+          <strong>FlowLens LiveLab</strong>
+          <small>视频内容分发实验台</small>
+        </span>
+      </a>
+
+      <div class="header-actions">
+        <span class="badge badge-info">
+          <svg class="icon" aria-hidden="true"><use href="#icon-flask"></use></svg>
+          模拟 + 离线回放
+        </span>
+        <button class="button button-secondary" id="toggle-run" type="button">
+          <svg class="icon" aria-hidden="true"><use href="#icon-pause"></use></svg>
+          <span>暂停实验</span>
+        </button>
+        <button class="button button-primary" id="simulate-batch" type="button">
+          <svg class="icon" aria-hidden="true"><use href="#icon-play"></use></svg>
+          <span>模拟下一批事件</span>
+        </button>
+      </div>
+    </header>
+
+    <div class="scope-strip" role="note">
+      <svg class="icon" aria-hidden="true"><use href="#icon-shield"></use></svg>
+      <span><strong>证据边界：</strong>页面同时包含固定种子模拟与公开数据 E3 离线回放；两者都不代表真实线上 A/B 或因果收益。</span>
+    </div>
+
+    <section class="offline-run-shell" id="offline-run-shell" aria-labelledby="offline-run-title" hidden></section>
+
+    <main class="app-shell" id="top">
+      <aside class="experiment-rail" aria-labelledby="queue-title">
+        <div class="rail-heading">
+          <div>
+            <p class="eyebrow">实验队列</p>
+            <h1 id="queue-title">分发策略实验</h1>
+          </div>
+          <span class="count" id="experiment-count">3</span>
+        </div>
+
+        <div class="rail-filter" aria-label="实验筛选">
+          <button class="filter-chip is-active" type="button" data-filter="all">全部</button>
+          <button class="filter-chip" type="button" data-filter="running">运行中</button>
+          <button class="filter-chip" type="button" data-filter="attention">需关注</button>
+        </div>
+
+        <div class="experiment-list" id="experiment-list"></div>
+
+        <section class="rail-note" aria-labelledby="method-note-title">
+          <svg class="icon" aria-hidden="true"><use href="#icon-file"></use></svg>
+          <div>
+            <h2 id="method-note-title">先诊断，再看 uplift</h2>
+            <p>SRM、触发率或事件链异常时，结果页只能作为排查线索。</p>
+          </div>
+        </section>
+      </aside>
+
+      <section class="workspace" aria-label="当前实验工作区">
+        <header class="experiment-context" id="experiment-context"></header>
+
+        <nav class="view-tabs" aria-label="实验工作区导航" id="view-tabs">
+          <button type="button" data-view="overview" aria-current="page">
+            <svg class="icon" aria-hidden="true"><use href="#icon-activity"></use></svg>
+            实验概览
+          </button>
+          <button type="button" data-view="strategy">
+            <svg class="icon" aria-hidden="true"><use href="#icon-sliders"></use></svg>
+            策略对照
+          </button>
+          <button type="button" data-view="health">
+            <svg class="icon" aria-hidden="true"><use href="#icon-shield"></use></svg>
+            健康检查
+          </button>
+          <button type="button" data-view="metrics">
+            <svg class="icon" aria-hidden="true"><use href="#icon-chart"></use></svg>
+            指标分析
+          </button>
+          <button type="button" data-view="decision">
+            <svg class="icon" aria-hidden="true"><use href="#icon-file"></use></svg>
+            决策卡
+          </button>
+        </nav>
+
+        <div class="view-root" id="view-root" tabindex="-1"></div>
+      </section>
+
+      <aside class="health-inspector" aria-labelledby="health-title">
+        <div class="inspector-heading">
+          <div>
+            <p class="eyebrow">持续诊断</p>
+            <h2 id="health-title">实验健康</h2>
+          </div>
+          <span class="health-summary" id="health-summary"></span>
+        </div>
+        <div id="health-checks" class="health-checks"></div>
+        <div class="inspector-footnote">
+          <strong>演示阈值</strong>
+          <p>阈值用于展示诊断流程，不代表任何公司的生产标准。</p>
+        </div>
+      </aside>
+    </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+    <script src="./data/ranklab_offline_run.js" defer></script>
+    <script src="./app.js" defer></script>
+  </body>
+</html>

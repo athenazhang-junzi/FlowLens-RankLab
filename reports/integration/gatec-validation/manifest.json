@@ -1,0 +1,35 @@
+{
+  "run_id": "gatec-eval-c85d58741bd0473a",
+  "status": "VALID",
+  "evidence_level": "E3",
+  "split": "validation",
+  "decision": "ITERATE_AND_RETEST",
+  "sampling": {
+    "method": "hash",
+    "seed": 20261009,
+    "request_count": 2000,
+    "candidate_count": 10889
+  },
+  "inputs": {
+    "candidates": "reports/gate3/validation_candidate_scores.csv",
+    "candidates_sha256": "ce417996fd8abe69784644741be23b256cb5fea2d73605f2860066ca438cb70b",
+    "rankings": "runs/integration/gatec-validation/results.csv",
+    "rankings_sha256": "ad995757fee9433cd09b38be51903055840408819facf3ed00ac8b623086a968",
+    "rank_manifest": "reports/integration/gatec_validation_rank.json",
+    "rank_manifest_sha256": "a534ec3ebd18cbbf12d56631ea915c2e39f1d979af82083bdad24784117ae984",
+    "hydration_manifest": "reports/integration/gatec_metadata_hydration.json",
+    "hydration_manifest_sha256": "1a23aca8026c1d5cf42cd6201078ffd21c7d77774f4cada20fe9930ba9c5515c"
+  },
+  "outputs": {
+    "metrics": "reports/integration/gatec-validation/metrics.csv",
+    "metrics_sha256": "6ac8b734328455313880d9ad8cc9486e6f0ac6767cd0f6e1d17bac29d6d5b841",
+    "paired_deltas": "reports/integration/gatec-validation/paired_deltas.csv",
+    "paired_deltas_sha256": "665b83e9dcfaa27bda7eaf191668393b6d6fc4ed1e769833aab1b676fd51d845",
+    "user_metrics": "reports/integration/gatec-validation/user_metrics.csv",
+    "user_metrics_sha256": "cbdfad9ce2a841496a959121f366e0868f691729350ea9aa2e16f280f434930a"
+  },
+  "candidate_conservation": "PASS",
+  "candidate_metadata_coverage": "PASS",
+  "bootstrap_repetitions": 300,
+  "claim_boundary": "This is a paired E3 offline replay on a deterministic logged-exposure cohort. It is not a randomized online experiment and does not establish causal or business lift."
+}

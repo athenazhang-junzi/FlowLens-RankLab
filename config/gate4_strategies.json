@@ -1,0 +1,97 @@
+{
+  "config_id": "gate4_strategy_lab_v1",
+  "evidence_level": "E3",
+  "random_seed": 20261006,
+  "upstream_gate3_run_id": "gate3-3b42b7057a17",
+  "selection_split": "validation",
+  "frozen_evaluation_splits": ["standard_test", "random_sensitivity"],
+  "candidate_policy": "reuse Gate 3 unique logged user-video pairs without additions or removals",
+  "base_score": "multitask_score",
+  "allowed_strategy_features": [
+    "multitask_score",
+    "itemcf_score",
+    "popularity_score",
+    "author_id",
+    "tag",
+    "historical_author_hate_risk",
+    "historical_user_tag_hate_risk",
+    "historical_recent_author_exposure",
+    "long_tail_score"
+  ],
+  "forbidden_strategy_features": [
+    "long_view",
+    "is_click",
+    "is_hate",
+    "test_outcome_rate",
+    "video_features_statistic_pure.csv"
+  ],
+  "strategy_templates": {
+    "S0": {
+      "name": "MultiTask baseline",
+      "purpose": "Frozen Gate 3 learning-model baseline",
+      "tuning_grid": [{}]
+    },
+    "S1": {
+      "name": "Collaborative blend",
+      "purpose": "Blend learned utility with ItemCF affinity",
+      "tuning_grid": [
+        {"itemcf_weight": 0.15},
+        {"itemcf_weight": 0.30},
+        {"itemcf_weight": 0.45}
+      ]
+    },
+    "S2": {
+      "name": "Diversity rerank",
+      "purpose": "Reduce repeated authors and primary tags in Top 10",
+      "tuning_grid": [
+        {"author_repeat_penalty": 0.03, "tag_repeat_penalty": 0.02},
+        {"author_repeat_penalty": 0.03, "tag_repeat_penalty": 0.04},
+        {"author_repeat_penalty": 0.06, "tag_repeat_penalty": 0.02},
+        {"author_repeat_penalty": 0.06, "tag_repeat_penalty": 0.04}
+      ]
+    },
+    "S3": {
+      "name": "Long-tail exploration",
+      "purpose": "Reserve ranking headroom for historically less-exposed items",
+      "tuning_grid": [
+        {"long_tail_boost": 0.02},
+        {"long_tail_boost": 0.04},
+        {"long_tail_boost": 0.06}
+      ]
+    },
+    "S4": {
+      "name": "Negative-feedback and fatigue control",
+      "purpose": "Penalize historical hate risk and recent author fatigue",
+      "tuning_grid": [
+        {"negative_risk_penalty": 0.05, "fatigue_penalty": 0.02},
+        {"negative_risk_penalty": 0.05, "fatigue_penalty": 0.04},
+        {"negative_risk_penalty": 0.10, "fatigue_penalty": 0.02},
+        {"negative_risk_penalty": 0.10, "fatigue_penalty": 0.04}
+      ]
+    }
+  },
+  "validation_objective": {
+    "ndcg_at_5": 0.55,
+    "ecr_at_5": 0.20,
+    "content_coverage_at_10": 0.10,
+    "author_coverage_at_10": 0.10,
+    "author_repeat_rate_at_10": -0.025,
+    "primary_tag_repeat_rate_at_10": -0.025
+  },
+  "evaluation": {
+    "top_k": [5, 10],
+    "minimum_candidates_per_user": 2,
+    "bootstrap_repetitions": 300,
+    "recent_history_days": 3,
+    "hate_rate_smoothing": 50.0
+  },
+  "offline_decision_rules": {
+    "ndcg_at_5_delta_ci_low_min": 0.0,
+    "ecr_at_5_delta_ci_low_min": 0.0,
+    "content_coverage_delta_min": -0.02,
+    "author_coverage_delta_min": -0.02,
+    "author_repeat_rate_delta_max": 0.01,
+    "random_sensitivity_ndcg_delta_min": -0.02
+  },
+  "claim_boundary": "Gate 4 is a retrospective offline strategy replay. ENTER_ONLINE_AB_CANDIDATE means eligible for a future randomized experiment, not approved for launch and not proven business lift."
+}

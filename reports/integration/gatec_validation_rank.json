@@ -1,0 +1,20 @@
+{
+  "status": "VALID",
+  "evidence_level": "E3",
+  "model": "flowlens",
+  "split": "validation",
+  "timestamp_ms": 1650207850712,
+  "request_count": 2000,
+  "candidate_count": 10889,
+  "request_sampling": "hash",
+  "sample_seed": 20261009,
+  "candidates_file": "reports/gate3/validation_candidate_scores.csv",
+  "candidates_sha256": "ce417996fd8abe69784644741be23b256cb5fea2d73605f2860066ca438cb70b",
+  "requests_file": "runs/integration/gatec-validation/requests.jsonl",
+  "requests_sha256": "9c12fbeb9e86e6779c96c03e39ba801b410593f0a30698254f8003d7ed951bae",
+  "claim_boundary": "Rank requests cover logged-exposure candidates only. A valid response does not establish online causal lift or business impact.",
+  "result_rows": 10889,
+  "results_file": "runs/integration/gatec-validation/results.csv",
+  "results_sha256": "ad995757fee9433cd09b38be51903055840408819facf3ed00ac8b623086a968",
+  "candidate_conservation": "PASS"
+}

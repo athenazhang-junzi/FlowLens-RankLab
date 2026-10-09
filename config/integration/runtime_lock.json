@@ -1,0 +1,36 @@
+{
+  "schema_version": "flowlens_ranklab_runtime_lock_v1",
+  "python": {
+    "required_major_minor": "3.12",
+    "packages": {
+      "numpy": "2.3.5",
+      "pandas": "2.2.3"
+    }
+  },
+  "metarank": {
+    "version": "0.8.0",
+    "image": "metarank/metarank:0.8.0@sha256:495f8f72cef67bbbccd1bc29b9f3d1ddfa322eb2f79eb151a48d9a6b4ed74e63",
+    "platform": "linux/arm64",
+    "model": "flowlens"
+  },
+  "dataset": {
+    "name": "KuaiRand-Pure",
+    "source": "https://zenodo.org/records/10439422",
+    "archive_md5": "0820331067a3784d9691136f772b35a7",
+    "license": "CC BY-SA 4.0",
+    "redistributed": false
+  },
+  "sampling": {
+    "method": "hash",
+    "seed": 20261009,
+    "gatec_training_groups": 10000,
+    "gatec_validation_requests": 2000,
+    "smoke_training_groups": 200,
+    "smoke_validation_requests": 50
+  },
+  "timestamps_ms": {
+    "metadata_hydration": 1650207850711,
+    "validation_ranking": 1650207850712
+  },
+  "evidence_boundary": "All model comparisons are E3 logged-exposure offline replay, not online causal or business lift."
+}

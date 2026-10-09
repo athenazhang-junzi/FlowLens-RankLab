@@ -1,0 +1,126 @@
+{
+  "contract_id": "flowlens_metarank_event_contract_v0.1",
+  "status": "gate_a_baseline",
+  "runtime_baseline": "metarank/metarank:0.8.0",
+  "source_dataset": "KuaiRand-Pure",
+  "modes": {
+    "logged_exposure_replay": {
+      "evidence_level": "E3",
+      "implemented": false,
+      "purpose": "offline training and reranking over historically exposed candidates"
+    },
+    "future_online_contract": {
+      "evidence_level": "E0",
+      "implemented": false,
+      "purpose": "future real request and feedback integration"
+    }
+  },
+  "namespaces": {
+    "user": "krp:user:",
+    "item": "krp:video:",
+    "session": "krp:replay:",
+    "ranking": "flr:rank:v0.1:",
+    "interaction": "flr:int:"
+  },
+  "replay_grouping": {
+    "keys": ["user_id", "date", "tab"],
+    "candidate_order": ["time_ms", "video_id"],
+    "minimum_unique_items": 2,
+    "semantic_boundary": "derived replay group, not a verified original online request or slate"
+  },
+  "time_policy": {
+    "transport": "utc_epoch_milliseconds",
+    "daily_partition": "source date",
+    "within_group_order": "time_ms",
+    "ranking_timestamp": "minimum interaction time_ms minus 1 millisecond",
+    "on_missing_or_invalid_time": "block_group"
+  },
+  "item_fields": [
+    {
+      "source": "author_id",
+      "target": "item.author_id",
+      "type": "string"
+    },
+    {
+      "source": "tag",
+      "target": "item.tags",
+      "type": "string_array"
+    },
+    {
+      "source": "upload_dt",
+      "target": "item.upload_date",
+      "type": "string",
+      "optional": true
+    },
+    {
+      "source": "video_duration",
+      "target": "item.duration_ms",
+      "type": "number",
+      "optional": true,
+      "missing_policy": "omit_field_without_imputation"
+    }
+  ],
+  "ranking_fields": [
+    "scene_tab",
+    "dataset_split",
+    "source_mode",
+    "upstream_run_id",
+    "strategy_version"
+  ],
+  "candidate_fields": [
+    {
+      "source": "multitask_score",
+      "target": "relevancy",
+      "model_use": "gate_b_configuration_required"
+    },
+    {
+      "source": "itemcf_score",
+      "target": "itemcf_score",
+      "model_use": "gate_b_configuration_required"
+    },
+    {
+      "source": "popularity_score",
+      "target": "popularity_score",
+      "model_use": "gate_b_configuration_required"
+    }
+  ],
+  "interactions": [
+    {
+      "condition": "is_click == 1",
+      "type": "click",
+      "training_weight": "gate_b_configuration_required"
+    },
+    {
+      "condition": "long_view == 1",
+      "type": "long_view",
+      "training_weight": "gate_b_configuration_required"
+    },
+    {
+      "condition": "is_hate == 1",
+      "type": "negative_feedback",
+      "training_weight": "excluded_in_v0.1",
+      "flowlens_use": "evaluation_guardrail"
+    }
+  ],
+  "forbidden_training_sources": [
+    "video_features_statistic_pure.csv"
+  ],
+  "forbidden_interaction_types": [
+    "impression"
+  ],
+  "blocking_checks": [
+    "event_ids_are_globally_unique",
+    "namespaces_match_contract",
+    "interaction_parent_ranking_exists",
+    "interaction_item_belongs_to_parent_ranking",
+    "ranking_precedes_its_interactions",
+    "ranking_items_are_unique",
+    "ranking_has_at_least_two_items",
+    "no_reserved_impression_is_emitted",
+    "time_splits_do_not_overlap",
+    "no_forbidden_future_features",
+    "rank_response_candidate_set_equals_request_candidate_set",
+    "failures_and_skips_are_counted"
+  ],
+  "claim_boundary": "A valid contract export proves adapter structure and linkage only. It does not prove successful Metarank runtime import, model training, ranking improvement, online experimentation, or business lift."
+}

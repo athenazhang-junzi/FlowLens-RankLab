@@ -1,0 +1,82 @@
+{
+  "status": "PASS",
+  "review_scope": "Gate 4 strategy selection, metrics, deltas, decisions, evidence boundaries, and lineage",
+  "checks": [
+    {
+      "check": "required_artifacts_exist",
+      "status": "PASS",
+      "detail": "missing=[]"
+    },
+    {
+      "check": "manifest_hashes_match_current_code",
+      "status": "PASS",
+      "detail": "script_match=True, config_match=True"
+    },
+    {
+      "check": "upstream_gate3_lineage_matches",
+      "status": "PASS",
+      "detail": "gate3_run_id=gate3-3b42b7057a17"
+    },
+    {
+      "check": "strategy_split_matrix_complete",
+      "status": "PASS",
+      "detail": "rows=15, pairs=15"
+    },
+    {
+      "check": "identical_candidates_within_split",
+      "status": "PASS",
+      "detail": "candidate counts are identical across S0-S4"
+    },
+    {
+      "check": "user_metrics_recompute",
+      "status": "PASS",
+      "detail": "maximum_absolute_difference=1.110e-16"
+    },
+    {
+      "check": "paired_deltas_recompute",
+      "status": "PASS",
+      "detail": "maximum_absolute_difference=9.845e-17"
+    },
+    {
+      "check": "validation_selection_is_argmax",
+      "status": "PASS",
+      "detail": "one validation argmax selected per strategy"
+    },
+    {
+      "check": "strategy_snapshots_are_immutable",
+      "status": "PASS",
+      "detail": "snapshots=5"
+    },
+    {
+      "check": "forbidden_outcomes_not_scoring_features",
+      "status": "PASS",
+      "detail": "overlap=[]"
+    },
+    {
+      "check": "evaluation_adapter_tests_pass",
+      "status": "PASS",
+      "detail": "tests=8, drift=WARN"
+    },
+    {
+      "check": "decision_vocabulary_and_boundary",
+      "status": "PASS",
+      "detail": "decisions=['BASELINE', 'ITERATE_AND_RETEST']"
+    },
+    {
+      "check": "claim_boundary_visible",
+      "status": "PASS",
+      "detail": "offline, experiment, and revenue boundaries are explicit"
+    },
+    {
+      "check": "manifest_artifacts_exist",
+      "status": "PASS",
+      "detail": "listed=11, missing=[]"
+    },
+    {
+      "check": "explanation_samples_present",
+      "status": "PASS",
+      "detail": "rows=100"
+    }
+  ],
+  "claim_boundary": "Gate 4 is a retrospective offline strategy replay. ENTER_ONLINE_AB_CANDIDATE means eligible for a future randomized experiment, not approved for launch and not proven business lift."
+}

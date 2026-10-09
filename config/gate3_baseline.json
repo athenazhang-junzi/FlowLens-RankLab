@@ -1,0 +1,65 @@
+{
+  "config_id": "gate3_baseline_v1",
+  "evidence_level": "E3",
+  "random_seed": 20261005,
+  "time_split": {
+    "train": {"start": 20220409, "end": 20220417},
+    "validation": {"start": 20220418, "end": 20220421},
+    "test": {"start": 20220422, "end": 20220508}
+  },
+  "evaluation": {
+    "candidate_policy": "unique user-video pairs observed in the evaluation window",
+    "primary_label": "long_view",
+    "secondary_label": "is_click",
+    "top_k": [5, 10],
+    "bootstrap_repetitions": 300,
+    "minimum_candidates_per_user": 2,
+    "require_positive_per_user": true,
+    "standard_test_role": "primary offline reranking proxy",
+    "random_test_role": "collection-policy sensitivity only"
+  },
+  "models": {
+    "popularity": {
+      "score": "log1p(train long-view count by video)",
+      "fallback": 0.0
+    },
+    "itemcf": {
+      "positive_event": "long_view == 1",
+      "similarity": "cosine-style co-occurrence with additive shrinkage",
+      "shrinkage": 10.0,
+      "popularity_backoff_weight": 0.001
+    },
+    "multitask_hash_sgd": {
+      "shared_hash_dimensions": 262144,
+      "epochs": 2,
+      "alpha": 0.00001,
+      "batch_rows": 100000,
+      "click_weight": 0.3,
+      "long_view_weight": 0.7
+    }
+  },
+  "allowed_model_features": [
+    "user_id",
+    "video_id",
+    "author_id",
+    "tag",
+    "tab",
+    "hour_bucket",
+    "video_duration",
+    "upload_age_bucket"
+  ],
+  "forbidden_model_features": [
+    "play_time_ms",
+    "long_view",
+    "is_click",
+    "is_like",
+    "is_follow",
+    "is_comment",
+    "is_forward",
+    "is_hate",
+    "profile_stay_time",
+    "comment_stay_time",
+    "video_features_statistic_pure.csv"
+  ],
+  "claim_boundary": "Offline results rank logged exposures only and do not establish online causal lift or Tencent business impact."
+}

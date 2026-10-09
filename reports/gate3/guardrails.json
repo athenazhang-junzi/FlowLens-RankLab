@@ -1,0 +1,11 @@
+{
+  "same_video_repeat_rate_user_day": 0.00603211826272227,
+  "same_author_repeat_rate_user_day": 0.0072081046212805104,
+  "users_with_video_repeat_rate": 0.05897128724349809,
+  "users_with_author_repeat_rate": 0.06901881980136801,
+  "author_hhi": 0.0009584759705082347,
+  "top_1_author_exposure_share": 0.0065232655065907115,
+  "top_10_author_exposure_share": 0.04329013312857335,
+  "top_100_author_exposure_share": 0.22405307157260507,
+  "exposed_authors": 5830
+}

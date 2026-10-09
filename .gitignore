@@ -1,0 +1,28 @@
+# Official public datasets are downloaded locally and must not be committed.
+data/raw/
+data/extracted/
+data/processed/
+
+# Local runtime and notebook artifacts.
+.venv/
+.deps/
+tmp/
+notebooks/.ipynb_checkpoints/
+__pycache__/
+*.pyc
+
+# macOS metadata.
+.DS_Store
+
+# Gate 3 row-level exports are reproducible but too large for source control.
+reports/gate3/*_candidate_scores.csv
+reports/gate3/user_ranking_metrics.csv
+
+# Gate 4 row-level evaluation and local tracking state are reproducible.
+reports/gate4/user_strategy_metrics.csv
+reports/gate4/rankings/
+reports/gate4/mlruns/
+
+# Local RankLab event streams, requests, responses, and model runtime state.
+runs/
+reports/gate5/

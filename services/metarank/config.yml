@@ -1,0 +1,82 @@
+# FlowLens RankLab Gate B baseline for Metarank 0.8.0.
+# The feature and interaction choices are engineering hypotheses, not validated effects.
+
+state:
+  type: memory
+
+train:
+  type: memory
+
+api:
+  host: 0.0.0.0
+  port: 8080
+
+core:
+  clickthrough:
+    maxSessionLength: 60s
+  tracking:
+    analytics: false
+    errors: false
+
+models:
+  flowlens:
+    type: lambdamart
+    backend:
+      type: xgboost
+      iterations: 50
+      learningRate: 0.1
+      ndcgCutoff: 5
+      maxDepth: 6
+      seed: 20261009
+    weights:
+      negative_feedback: 0
+      click: 3
+      long_view: 7
+    split: time=80%
+    eval: [NDCG@5, NDCG@10, MAP@5]
+    features:
+      - item_duration
+      - item_duration_missing
+      - position
+      - recent_clicks
+      - recent_long_views
+      - tag_diversity
+
+features:
+  - name: item_duration
+    type: number
+    scope: item
+    field: item.duration_ms
+    ttl: 90d
+
+  - name: item_duration_missing
+    type: number
+    scope: item
+    field: item.duration_missing
+    ttl: 90d
+
+  - name: position
+    type: position
+    position: 5
+
+  - name: recent_clicks
+    type: window_count
+    interaction: click
+    scope: item
+    bucket: 24h
+    periods: [7, 30]
+    refresh: 0s
+    ttl: 90d
+
+  - name: recent_long_views
+    type: window_count
+    interaction: long_view
+    scope: item
+    bucket: 24h
+    periods: [7, 30]
+    refresh: 0s
+    ttl: 90d
+
+  - name: tag_diversity
+    type: diversity
+    source: item.tags

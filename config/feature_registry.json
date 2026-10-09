@@ -1,0 +1,82 @@
+{
+  "registry_version": "0.1.0",
+  "entity_keys": {
+    "user": "user_id",
+    "content": "video_id"
+  },
+  "event_time_policy": {
+    "daily_partition": "date",
+    "within_day_order": "time_ms",
+    "timezone_note": "Do not silently overwrite source date with a derived timezone date."
+  },
+  "features": [
+    {
+      "feature_id": "user_active_degree",
+      "entity": "user",
+      "source": "user_features_pure.csv",
+      "type": "categorical",
+      "available_at": "static_release_snapshot",
+      "allowed_uses": ["segmentation", "diagnostics", "baseline_features"],
+      "missing_policy": "map null and UNKNOWN-like values to explicit UNKNOWN",
+      "evidence_level": "E1",
+      "known_limit": "observed enum is broader than the short official README list"
+    },
+    {
+      "feature_id": "video_author_id",
+      "entity": "content",
+      "source": "video_features_basic_pure.csv",
+      "source_column": "author_id",
+      "type": "categorical_id",
+      "available_at": "upload",
+      "allowed_uses": ["author_deduplication", "coverage", "concentration_guardrail"],
+      "missing_policy": "reject from author-level analysis when absent",
+      "evidence_level": "E1"
+    },
+    {
+      "feature_id": "video_tags",
+      "entity": "content",
+      "source": "video_features_basic_pure.csv",
+      "source_column": "tag",
+      "type": "multi_categorical",
+      "available_at": "upload",
+      "allowed_uses": ["interest_matching", "category_coverage", "diversity"],
+      "missing_policy": "explicit UNKNOWN_TAG and missing indicator",
+      "evidence_level": "E1"
+    },
+    {
+      "feature_id": "upload_recency_days",
+      "entity": "content",
+      "source": "video_features_basic_pure.csv",
+      "source_column": "upload_dt",
+      "type": "numeric_derived",
+      "available_at": "request_time",
+      "allowed_uses": ["fresh_content_exploration", "diagnostics"],
+      "missing_policy": "exclude from freshness-specific analysis",
+      "evidence_level": "E2",
+      "derivation": "max(0, source_date - upload_dt)"
+    },
+    {
+      "feature_id": "historical_interest_profile",
+      "entity": "user",
+      "source": "standard_event_logs",
+      "type": "time_aware_derived",
+      "available_at": "strictly_before_request_time",
+      "allowed_uses": ["baseline_recall", "recent_interest_weighting"],
+      "missing_policy": "cold-start fallback to train-window popularity",
+      "evidence_level": "E2",
+      "leakage_test_required": true
+    },
+    {
+      "feature_id": "monthly_video_statistics",
+      "entity": "content",
+      "source": "video_features_statistic_pure.csv",
+      "type": "aggregate_snapshot",
+      "available_at": "unknown_within_release_month",
+      "allowed_uses": ["static_descriptive_profile_only"],
+      "forbidden_uses": ["training", "validation", "test_ranking", "time_split_features"],
+      "missing_policy": "not_applicable",
+      "evidence_level": "E1",
+      "known_limit": "high leakage risk because no event date is provided"
+    }
+  ]
+}
