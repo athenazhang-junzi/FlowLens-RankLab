@@ -24,7 +24,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--report",
         type=Path,
-        default=PROJECT_ROOT / "reports" / "integration" / "gateb_event_validation.json",
+        default=PROJECT_ROOT / "runs" / "integration" / "gateb-contract" / "validation.json",
     )
     return parser.parse_args()
 

@@ -74,4 +74,4 @@ Gate A 已完成产品定义、目标架构和事件契约；Gate B 已完成 Me
 
 ## 7. 与现有证据索引的关系
 
-现有 [FlowLens 证据索引](../../04-证据索引与声明边界.md) 继续作为 Gate 2–4 数字和结论的唯一来源。Gate C 的新数字只来自 `reports/integration/gatec-validation/` 与 `gatec_livelab_payload.json`；它们不覆盖既有 Gate 3/4 结论。
+Gate C 的公开数字只来自 `reports/integration/gatec-validation/`、`gatec_livelab_payload.json` 与对应的评估报告；它们不应被外推为线上实验或业务收益。

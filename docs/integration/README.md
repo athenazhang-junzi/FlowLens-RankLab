@@ -1,6 +1,6 @@
-# FlowLens RankLab｜合并阶段索引
+# FlowLens RankLab｜集成文档
 
-本目录定义 FlowLens、Metarank 与 FlowLens LiveLab 的集成边界。当前已完成 **Gate A：产品与接口基线**、**Gate B：Metarank 最小运行时链路**、**Gate C：统一验证集评估与 LiveLab 导入**；Gate D 的本地复现与发布检查已通过，代码采用 Apache-2.0，提交后仍需干净 clone 复核。
+本目录说明 FlowLens、Metarank 与 LiveLab 如何组成一条可复现的离线策略验证链。公开仓库只保留理解接口、核验结果和复现集成层所需的文档。
 
 ## 当前状态
 
@@ -9,16 +9,15 @@
 | A | 定义产品、架构、事件契约与证据边界 | 已完成 | 本目录 4 份基线文档与机器可读事件契约 |
 | B | 跑通最小事件导出、Metarank 训练与重排 | 已完成：运行时与候选守恒通过 | 配置、适配器、运行报告与校验记录 |
 | C | 把重排结果送回 FlowLens 评估，并让 LiveLab 读取真实离线产物 | 已完成：验证 pilot 决策为 ITERATE_AND_RETEST | 统一指标、配对区间、离线摘要与界面卡片 |
-| D | 发布与复现 | 本地复现与发布检查通过；待提交后干净 clone 复核 | 一键命令、版本锁、CI、Apache-2.0 与复现清单 |
+| D | 发布与复现 | 本地复现、精简仓库与 CI 检查通过 | 一键命令、版本锁、CI、Apache-2.0 与复现清单 |
 
 ## 文档入口
 
-1. [产品需求文档](./00-PRD-FlowLens-RankLab-v1.md)：解释合并后的产品到底解决什么问题。
-2. [系统架构](./01-system-architecture.md)：明确三个组件的职责和数据流。
-3. [事件契约](./02-event-contract.md)：定义 FlowLens 与 Metarank 之间的字段、ID、时间和校验规则。
-4. [证据与声明边界](./03-evidence-boundary.md)：区分已完成事实、离线估计、模拟结果和未来能力。
-5. [Gate D 复现与发布说明](./04-reproduction-and-release.md)：给出一键入口、运行锁、已执行记录和发布清单。
-6. [`metarank_event_contract.json`](../../config/integration/metarank_event_contract.json)：供 Gate B 适配器读取的机器可读基线。
+1. [系统架构](./01-system-architecture.md)：三个组件的职责和数据流。
+2. [事件契约](./02-event-contract.md)：FlowLens 与 Metarank 之间的字段、ID、时间和校验规则。
+3. [证据与声明边界](./03-evidence-boundary.md)：区分真实离线结果、本地模拟和未来能力。
+4. [复现与发布说明](./04-reproduction-and-release.md)：一键入口、运行锁和产物说明。
+5. [`metarank_event_contract.json`](../../config/integration/metarank_event_contract.json)：适配器读取的机器可读契约。
 
 ## 已冻结的关键决策
 
@@ -46,7 +45,7 @@
 - 排序 API 实际运行 50 个验证请求，253 个候选全部返回；
 - 运行时链路通过不代表效果提升；验证候选元数据补齐与统一评估已在 Gate C 独立完成并记录。
 
-详见 [Gate B 适配器验证摘要](../../reports/integration/README.md) 和 [Metarank 运行说明](../../services/metarank/README.md)。
+具体运行方法见 [Metarank 运行说明](../../services/metarank/README.md)。Gate B 的过程型 JSON 已从公开仓库移除，关键规模和边界保留在本文与运行说明中。
 
 ## Gate C 当前验证结果
 

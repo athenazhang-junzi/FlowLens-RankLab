@@ -79,7 +79,7 @@ make ranklab-gatec
 - 导入：2,077 条事件，2,799 个状态更新；
 - 训练：92 个 clickthrough，74／18 时间切分，模型上传成功；
 - API：50 个请求返回 253 行，候选守恒通过；
-- 证据：`reports/integration/gateb_runtime_validation.json` 和 `gateb_rank_runtime.json`。
+- 对应过程型 JSON 已从精简后的公开仓库移除；上面的规模摘要用于说明已验证范围，不代表效果提升。
 
 完整 Gate D 复现再次得到 2,000 个验证请求、10,889 个候选和 `ITERATE_AND_RETEST` 决策；这不是效果提升证据。
 

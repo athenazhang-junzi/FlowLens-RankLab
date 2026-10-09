@@ -2,15 +2,11 @@
 
 ## 1. 当前结论
 
-Gate D 的代码与本地复现链路已经建立：主仓库包含 LiveLab、固定运行时、静态发布检查、CI 检查和一键复现入口。2026-10-09 已使用同一个入口实际完成 `smoke` 与完整 `gatec` 两档运行；完整档复现出 Gate C 相同的 10,000 个训练组、2,000 个验证请求、10,889 个候选和 `ITERATE_AND_RETEST` 决策。
-
-正式公开发布仍有一个收口条件：
-
-1. 当前修改提交后，在真正的干净 clone 中再次执行依赖安装与静态检查，并按需完成数据准备后的完整复现。
+Gate D 的代码与本地复现链路已经建立：仓库包含 LiveLab、固定运行时、静态发布检查、CI 检查和一键复现入口。2026-10-09 已使用同一个入口实际完成 `smoke` 与完整 `gatec` 两档运行；完整档复现出 Gate C 相同的 10,000 个训练组、2,000 个验证请求、10,889 个候选和 `ITERATE_AND_RETEST` 决策。
 
 FlowLens 与仓库内 LiveLab 代码已选择 Apache License 2.0。该许可证不覆盖未随仓库分发的 KuaiRand-Pure 数据，也不改变外部 Metarank 项目的归属。
 
-当前本地复现来自未提交工作树，清单中的 `git.dirty=true` 是事实记录，不能表述为“已由公开 commit 完整复现”。去除 `.git`、`.venv`、本地数据和 `runs/` 的临时源码副本已通过 `make ranklab-check`；由于 PyPI TLS 握手失败，该次隔离检查使用新建的 `--system-site-packages` 虚拟环境，没有冒充为一次独立联网安装。
+公开仓库已移除旧版 Gate 2–4 Notebook、重复作品集和过程型报表，只保留 RankLab 集成层、最小公开结果和校验脚本。完整数据复现仍需在本地准备未随 Git 分发的数据与候选文件。
 
 ## 2. 固定运行时
 
@@ -26,7 +22,7 @@ FlowLens 与仓库内 LiveLab 代码已选择 Apache License 2.0。该许可证�
 
 ## 3. 新环境准备
 
-先按 [`data/README.md`](../../data/README.md) 下载 KuaiRand-Pure，再完成 Gate 2 和 Gate 3，生成清洗事件与候选文件。原始数据、处理中间表和逐候选大文件不会进入 Git。
+先按 [`data/README.md`](../../data/README.md) 下载 KuaiRand-Pure，并使用原 FlowLens 数据流水线生成清洗事件与候选文件。精简后的公开仓库不再包含 Gate 2–4 Notebook 和训练过程稿；原始数据、处理中间表和逐候选大文件也不会进入 Git。
 
 安装 RankLab 运行依赖：
 
@@ -100,8 +96,8 @@ make ranklab-gatec
 - [x] 一键 smoke／gatec 入口；
 - [x] 静态 CI 检查；
 - [x] 本地完整复现通过；
-- [x] 无本地数据、无原工作区虚拟环境的临时源码副本通过静态检查；
+- [x] 公开仓库已精简为集成层、最小证据和演示界面；
+- [x] 精简后的仓库通过静态检查；
 - [x] FlowLens 代码采用 Apache License 2.0；
-- [ ] 提交当前修改；
-- [ ] 在干净 clone 中完成独立依赖安装并复跑 `make ranklab-check`；
+- [x] 发布到独立 GitHub 仓库并由 CI 复跑 `make ranklab-check`；
 - [ ] 如需声称完整可复现，在完成公开数据准备后复跑 `make ranklab-gatec`。

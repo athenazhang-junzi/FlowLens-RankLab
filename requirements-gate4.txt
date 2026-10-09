@@ -1,4 +1,0 @@
--r requirements-gate3.txt
-
-# Gate 4 currently uses local JSON adapters because MLflow/Evidently could not
-# be installed in this environment. The adapters require no additional package.

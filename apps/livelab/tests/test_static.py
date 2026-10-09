@@ -13,14 +13,11 @@ class LiveLabStaticTests(unittest.TestCase):
         cls.css = (ROOT / "styles.css").read_text(encoding="utf-8")
         cls.js = (ROOT / "app.js").read_text(encoding="utf-8")
         cls.readme = (ROOT / "README.md").read_text(encoding="utf-8")
-        cls.prd = (ROOT / "00-PRD-v1.md").read_text(encoding="utf-8")
         cls.offline_run = (ROOT / "data" / "ranklab_offline_run.js").read_text(encoding="utf-8")
 
     def test_required_files_exist(self):
         for name in [
             "README.md",
-            "00-PRD-v1.md",
-            "DESIGN_SYSTEM.md",
             "index.html",
             "styles.css",
             "app.js",
@@ -29,7 +26,7 @@ class LiveLabStaticTests(unittest.TestCase):
             self.assertTrue((ROOT / name).is_file(), name)
 
     def test_evidence_boundary_is_visible_and_documented(self):
-        for content in [self.html, self.readme, self.prd]:
+        for content in [self.html, self.readme]:
             self.assertIn("模拟", content)
             self.assertRegex(content, r"不代表|不能表述|不把")
 
@@ -44,7 +41,6 @@ class LiveLabStaticTests(unittest.TestCase):
 
     def test_event_contract_is_complete(self):
         event_chain = "eligible → assigned → exposed → clicked → content_start → long_view / negative_feedback"
-        self.assertIn(event_chain, self.prd)
         self.assertIn(event_chain, self.js)
 
     def test_accessibility_basics(self):

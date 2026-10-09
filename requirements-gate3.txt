@@ -1,3 +1,0 @@
--r requirements-gate2.txt
-scikit-learn==1.9.1
-scipy==1.18.1
